@@ -1,36 +1,53 @@
-# Taking integer inputs using the int() function
-num1 = int(input("Enter first number: "))
-operator = input("Enter an operator (+, -, *, /, %): ")
-num2 = int(input("Enter second number: "))
+def get_number(prompt):
+    while True:
+        try:
+            return int(input(prompt))
+        except ValueError:
+            print("Invalid input! Please enter a whole number.")
 
-# Conditional statements to perform arithmetic operations
-if operator == "+":
-    result = num1 + num2
-    print(f"Result: {result}")
 
-elif operator == "-":
-    result = num1 - num2
-    print(f"Result: {result}")
+def main():
+    print("Simple Calculator")
 
-elif operator == "*":
-    result = num1 * num2
-    print(f"Result: {result}")
+    while True:
+        num1 = get_number("Enter first number: ")
+        operator = input("Enter an operator (+, -, *, /, %): ").strip()
+        num2 = get_number("Enter second number: ")
 
-elif operator == "/":
-    # Checking for division by zero error
-    if num2 != 0:
-        result = num1 / num2
-        print(f"Result: {result}")
-    else:
-        print("Error! Division by zero is not allowed.")
+        if operator == "+":
+            result = num1 + num2
+            print(f"Result: {result}")
 
-elif operator == "%":
-    # Checking for modulo by zero error
-    if num2 != 0:
-        result = num1 % num2
-        print(f"Remainder: {result}")
-    else:
-        print("Error! Modulo by zero is not allowed.")
+        elif operator == "-":
+            result = num1 - num2
+            print(f"Result: {result}")
 
-else:
-    print("Error! Invalid operator entered.")
+        elif operator == "*":
+            result = num1 * num2
+            print(f"Result: {result}")
+
+        elif operator == "/":
+            if num2 != 0:
+                result = num1 / num2
+                print(f"Result: {result}")
+            else:
+                print("Error! Division by zero is not allowed.")
+
+        elif operator == "%":
+            if num2 != 0:
+                result = num1 % num2
+                print(f"Remainder: {result}")
+            else:
+                print("Error! Modulo by zero is not allowed.")
+
+        else:
+            print("Error! Invalid operator entered.")
+
+        again = input("Do you want to calculate again? (y/n): ").strip().lower()
+        if again != "y":
+            print("Goodbye!")
+            break
+
+
+if __name__ == "__main__":
+    main()
