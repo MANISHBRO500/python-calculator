@@ -6,16 +6,20 @@
   <title>Python Calculator Output</title>
   <style>
     :root {
-      --bg: #0f172a;
-      --panel: #111827;
-      --card: #1f2937;
-      --primary: #38bdf8;
-      --secondary: #22c55e;
-      --danger: #ef4444;
-      --text: #e5e7eb;
-      --muted: #94a3b8;
-      --border: rgba(148, 163, 184, 0.25);
-      --shadow: 0 18px 45px rgba(15, 23, 42, 0.45);
+      --bg: #d9d9d9;
+      --shell-bg: #f5f5f5;
+      --shell-window: #eaeaea;
+      --panel: #ffffff;
+      --console-bg: #1e1e1e;
+      --console-text: #f5f5f5;
+      --console-muted: #9aa0a6;
+      --console-green: #7fe38a;
+      --console-blue: #7ab8ff;
+      --console-red: #ff8a8a;
+      --console-yellow: #f3d18b;
+      --border: #bfbfbf;
+      --header: #d4d4d4;
+      --shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
     }
 
     * {
@@ -26,145 +30,184 @@
       margin: 0;
       min-height: 100vh;
       font-family: Arial, Helvetica, sans-serif;
-      background: linear-gradient(135deg, #020817, #0f172a 35%, #111827);
-      color: var(--text);
+      background: linear-gradient(180deg, #d8d8d8 0%, #cfcfcf 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 24px;
+      color: #1f1f1f;
     }
 
-    .container {
-      width: min(820px, 100%);
-      background: rgba(17, 24, 39, 0.95);
+    .shell {
+      width: min(960px, 100%);
+      background: var(--shell-window);
       border: 1px solid var(--border);
-      border-radius: 22px;
+      border-radius: 14px;
       box-shadow: var(--shadow);
       overflow: hidden;
+      border-top: 5px solid #d9d9d9;
     }
 
-    .header {
-      background: linear-gradient(90deg, rgba(56,189,248,0.22), rgba(34,197,94,0.12));
-      padding: 22px 26px;
+    .titlebar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--header);
       border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 14px;
+      color: #2e2e2e;
     }
 
-    .header h1 {
-      margin: 0;
-      font-size: clamp(1.8rem, 3vw, 2.5rem);
+    .window-controls {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+      border: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .dot.red { background: #ff5f57; }
+    .dot.yellow { background: #febc2e; }
+    .dot.green { background: #28c840; }
+
+    .title-text {
+      font-weight: 600;
       letter-spacing: 0.04em;
-    }
-
-    .header p {
-      margin: 8px 0 0;
-      color: var(--muted);
-      font-size: 0.98rem;
+      text-transform: uppercase;
+      font-size: 12px;
+      opacity: 0.8;
     }
 
     .content {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 24px;
-      padding: 26px;
+      grid-template-columns: 1fr 1.3fr;
+      gap: 18px;
+      padding: 18px;
+      background: var(--shell-bg);
     }
 
     .panel {
-      background: rgba(31, 41, 55, 0.7);
+      background: #f7f7f7;
       border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 20px;
+      border-radius: 10px;
+      padding: 16px;
     }
 
     .panel h2 {
-      margin-top: 0;
-      margin-bottom: 18px;
-      font-size: 1.2rem;
-      color: var(--primary);
+      margin: 0 0 16px;
+      font-size: 15px;
+      color: #2e2e2e;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
     }
 
     .field {
-      margin-bottom: 18px;
+      margin-bottom: 14px;
     }
 
     label {
       display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-      color: var(--muted);
+      margin-bottom: 7px;
+      font-size: 12px;
+      color: #4d4d4d;
+      font-weight: 700;
     }
 
     input, select, button {
       width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 16px;
-      font-size: 1rem;
+      border: 1px solid #cfcfcf;
+      border-radius: 8px;
+      background: #fff;
+      color: #1d1d1d;
+      padding: 11px 12px;
+      font-size: 14px;
       outline: none;
       transition: 0.2s ease;
     }
 
-    input, select {
-      background: rgba(15, 23, 42, 0.9);
-      color: var(--text);
-    }
-
     input:focus, select:focus {
-      border-color: rgba(56, 189, 248, 0.8);
-      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+      border-color: #7aa8ff;
+      box-shadow: 0 0 0 3px rgba(122,168,255,0.18);
     }
 
     button {
-      background: linear-gradient(135deg, var(--primary), #0ea5e9);
-      color: #03111f;
-      border: none;
-      font-weight: 700;
+      background: linear-gradient(180deg, #f9f9f9, #e9e9e9);
       cursor: pointer;
-      margin-top: 10px;
-      transition: transform 0.2s ease, filter 0.2s ease;
+      font-weight: 700;
+      border-color: #bdbdbd;
     }
 
     button:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.04);
+      background: linear-gradient(180deg, #f4f4f4, #e2e2e2);
     }
 
-    .output-box {
-      min-height: 260px;
-      background: #020817;
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 16px;
-      font-family: "Courier New", Courier, monospace;
-      color: #d1fae5;
+    .console {
+      background: var(--console-bg);
+      border-radius: 10px;
+      border: 1px solid #2f2f2f;
+      overflow: hidden;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.04);
+    }
+
+    .console-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #232323;
+      border-bottom: 1px solid #2b2b2b;
+      padding: 10px 12px;
+      color: var(--console-muted);
+      font-size: 12px;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    .console-title {
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .console-body {
+      min-height: 300px;
+      padding: 18px 16px 14px;
+      font-family: "Consolas", "Courier New", monospace;
+      font-size: 14px;
       line-height: 1.7;
-      overflow-wrap: anywhere;
+      color: var(--console-text);
+      background: linear-gradient(180deg, #1f1f1f, #1a1a1a);
     }
 
-    .output-box .title {
-      color: var(--primary);
-      font-weight: 700;
-      margin-bottom: 12px;
-      display: block;
+    .prompt {
+      color: var(--console-green);
+      margin-right: 8px;
+      font-weight: bold;
     }
 
-    .result-line {
-      color: #bbf7d0;
-      font-size: 1.05rem;
-      margin: 8px 0;
+    .line {
+      white-space: pre-wrap;
+      word-break: break-word;
     }
 
-    .error-line {
-      color: #fca5a5;
-      margin: 8px 0;
+    .line.success {
+      color: var(--console-green);
     }
 
-    .small-note {
-      margin-top: 14px;
-      color: var(--muted);
-      font-size: 0.9rem;
+    .line.error {
+      color: var(--console-red);
     }
 
-    @media (max-width: 700px) {
+    .line.info {
+      color: var(--console-blue);
+    }
+
+    @media (max-width: 760px) {
       .content {
         grid-template-columns: 1fr;
       }
@@ -172,15 +215,20 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <h1>Python Calculator</h1>
-      <p>Styled output view for arithmetic operations</p>
+  <div class="shell">
+    <div class="titlebar">
+      <div class="window-controls">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+      </div>
+      <div class="title-text">Python Calculator</div>
+      <div style="width: 72px;"></div>
     </div>
 
     <div class="content">
       <div class="panel">
-        <h2>Calculator Input</h2>
+        <h2>Input</h2>
 
         <div class="field">
           <label for="num1">First Number</label>
@@ -203,19 +251,20 @@
           <input id="num2" type="number" value="5" />
         </div>
 
-        <button onclick="calculate()">Calculate</button>
+        <button onclick="calculate()">Run Calculator</button>
       </div>
 
-      <div class="panel">
-        <h2>Python Output</h2>
-        <div class="output-box" id="outputBox">
-          <span class="title">Console Output</span>
-          <div class="result-line">Enter first number: 10</div>
-          <div class="result-line">Enter an operator (+, -, *, /, %): +</div>
-          <div class="result-line">Enter second number: 5</div>
-          <div class="result-line">Result: 15</div>
+      <div class="console" aria-live="polite">
+        <div class="console-header">
+          <span class="console-title">IDLE Console</span>
+          <span>Python 3.x</span>
         </div>
-        <div class="small-note">This page mimics the output style of a Python calculator.</div>
+        <div class="console-body" id="consoleBody">
+          <div class="line info"><span class="prompt">&gt;&gt;&gt;</span> Enter first number: 10</div>
+          <div class="line info"><span class="prompt">&gt;&gt;&gt;</span> Enter an operator (+, -, *, /, %): +</div>
+          <div class="line info"><span class="prompt">&gt;&gt;&gt;</span> Enter second number: 5</div>
+          <div class="line success"><span class="prompt">&gt;&gt;&gt;</span> Result: 15</div>
+        </div>
       </div>
     </div>
   </div>
@@ -225,42 +274,40 @@
       const num1 = Number(document.getElementById('num1').value);
       const num2 = Number(document.getElementById('num2').value);
       const operator = document.getElementById('operator').value;
-      const output = document.getElementById('outputBox');
+      const consoleBody = document.getElementById('consoleBody');
 
       let lines = [];
-      lines.push(`Enter first number: ${num1}`);
-      lines.push(`Enter an operator (+, -, *, /, %): ${operator}`);
-      lines.push(`Enter second number: ${num2}`);
+      lines.push({ text: `Enter first number: ${num1}`, type: 'info' });
+      lines.push({ text: `Enter an operator (+, -, *, /, %): ${operator}`, type: 'info' });
+      lines.push({ text: `Enter second number: ${num2}`, type: 'info' });
 
       if (!Number.isFinite(num1) || !Number.isFinite(num2)) {
-        lines.push('Error! Invalid input. Please enter valid numbers.');
+        lines.push({ text: 'Error! Invalid input. Please enter valid numbers.', type: 'error' });
       } else if (operator === '+') {
-        lines.push(`Result: ${num1 + num2}`);
+        lines.push({ text: `Result: ${num1 + num2}`, type: 'success' });
       } else if (operator === '-') {
-        lines.push(`Result: ${num1 - num2}`);
+        lines.push({ text: `Result: ${num1 - num2}`, type: 'success' });
       } else if (operator === '*') {
-        lines.push(`Result: ${num1 * num2}`);
+        lines.push({ text: `Result: ${num1 * num2}`, type: 'success' });
       } else if (operator === '/') {
         if (num2 === 0) {
-          lines.push('Error! Division by zero is not allowed.');
+          lines.push({ text: 'Error! Division by zero is not allowed.', type: 'error' });
         } else {
-          lines.push(`Result: ${num1 / num2}`);
+          lines.push({ text: `Result: ${num1 / num2}`, type: 'success' });
         }
       } else if (operator === '%') {
         if (num2 === 0) {
-          lines.push('Error! Modulo by zero is not allowed.');
+          lines.push({ text: 'Error! Modulo by zero is not allowed.', type: 'error' });
         } else {
-          lines.push(`Remainder: ${num1 % num2}`);
+          lines.push({ text: `Remainder: ${num1 % num2}`, type: 'success' });
         }
       } else {
-        lines.push('Error! Invalid operator entered.');
+        lines.push({ text: 'Error! Invalid operator entered.', type: 'error' });
       }
 
-      output.innerHTML = '<span class="title">Console Output</span>' +
-        lines.map(line => {
-          const cls = line.includes('Error!') ? 'error-line' : 'result-line';
-          return `<div class="${cls}">${line}</div>`;
-        }).join('');
+      consoleBody.innerHTML = lines.map(line => {
+        return `<div class="line ${line.type}"><span class="prompt">&gt;&gt;&gt;</span> ${line.text}</div>`;
+      }).join('');
     }
   </script>
 </body>
